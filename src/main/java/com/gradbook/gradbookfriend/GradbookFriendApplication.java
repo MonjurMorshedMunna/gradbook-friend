@@ -1,0 +1,12 @@
+package com.gradbook.gradbookfriend;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class GradbookFriendApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(GradbookFriendApplication.class, args);
+	}
+}
