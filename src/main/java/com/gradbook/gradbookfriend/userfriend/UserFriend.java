@@ -17,13 +17,12 @@ public class UserFriend {
     @Column(name="id")
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id")
-    private User user;
+    @Column(name="user_id")
+    private Long userId;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="friend_id")
-    private User friend;
+
+    @Column(name="friend_id")
+    private Long friendId;
 
     @Column(name="last_modified")
     private Timestamp lastModified;
@@ -32,28 +31,28 @@ public class UserFriend {
 
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getFriendId() {
+        return friendId;
+    }
+
+    public void setFriendId(Long friendId) {
+        this.friendId = friendId;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getFriend() {
-        return friend;
-    }
-
-    public void setFriend(User friend) {
-        this.friend = friend;
     }
 
     public Timestamp getLastModified() {

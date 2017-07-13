@@ -1,9 +1,14 @@
 package com.gradbook.gradbookfriend.userfriend.helper;
 
 import com.gradbook.gradbookfriend.user.User;
+import com.gradbook.gradbookfriend.user.UserRepository;
 import com.gradbook.gradbookfriend.userfriend.UserFriend;
+import com.gradbook.gradbookfriend.userfriend.UserFriendRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,8 +17,21 @@ import java.util.List;
 @Component
 public class UserFriendResourceHelper {
 
-    List<User> getFriends(){
+    @Autowired
+    private UserRepository userRepository;
 
-        return null;
+    @Autowired
+    private UserFriendRepository userFriendRepository;
+
+    List<User> getFriends(Principal principal){
+        User user = userRepository.findByEmail(principal.getName());
+        List<UserFriend> userFriends = userFriendRepository.findByUserId(user.getId());
+        List<User> users = new ArrayList<>();
+        for(UserFriend userFriend: userFriends){
+            User usersFriend = userRepository.findOne(userFriend.getFriendId());
+            usersFriend.setPassword("");
+            users.add(usersFriend);
+        }
+        return users;
     }
 }
