@@ -12,26 +12,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Munna on 10-Jul-17.
+ * Created by Munna on 13-Jul-17.
  */
 @Component
 public class UserFriendResourceHelper {
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    UserFriendRepository userFriendRepository;
 
-    @Autowired
-    private UserFriendRepository userFriendRepository;
-
-    List<User> getFriends(Principal principal){
-        User user = userRepository.findByEmail(principal.getName());
-        List<UserFriend> userFriends = userFriendRepository.findByUserId(user.getId());
+    public List<User> getExistingFriends(Principal principal){
+        User user = userRepository.findOne(Long.parseLong(principal.getName()));
+        List<UserFriend> friends = userFriendRepository.findByUserId(user.getId());
         List<User> users = new ArrayList<>();
-        for(UserFriend userFriend: userFriends){
-            User usersFriend = userRepository.findOne(userFriend.getFriendId());
-            usersFriend.setPassword("");
-            users.add(usersFriend);
+        for(UserFriend friend: friends){
+            User friendUser = userRepository.findOne(friend.getFriendId());
+            friendUser.setPassword("");
+            users.add(friendUser);
         }
         return users;
     }
+
+    public List<User> getFriendSuggestion(Principal principal){
+        User user = userRepository.findOne(Long.parseLong(principal.getName()));
+        List<UserFriend> friends = userFriendRepository.findByUserId(user.getId());
+        List<User> users = new ArrayList<>();
+
+        if(friends.size()==0){
+            return userRepository.findByEmailNotIn(user.getEmail());
+        }else{
+            List<Long> userIds = new ArrayList<>();
+            List<String> emails = new ArrayList<>();
+            for(UserFriend friend: friends){
+                User friendUser = userRepository.getOne(friend.getFriendId());
+                userIds.add(friend.getFriendId());
+                emails.add(friendUser.getEmail());
+            }
+            users = userRepository.findByEmailNotIn(emails);
+            return users;
+        }
+
+    }
+
 }

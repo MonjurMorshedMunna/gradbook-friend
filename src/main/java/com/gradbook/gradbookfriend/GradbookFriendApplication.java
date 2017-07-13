@@ -1,5 +1,9 @@
 package com.gradbook.gradbookfriend;
 
+import com.gradbook.gradbookfriend.user.User;
+import com.gradbook.gradbookfriend.user.UserRepository;
+import com.gradbook.gradbookfriend.userfriend.helper.UserFriendResourceHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -14,23 +18,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.List;
 
 @SpringBootApplication
 @EnableCaching
-@RestController
-@EnableResourceServer
 public class GradbookFriendApplication {
 
 
-    @GetMapping("/all")
+
+   /* @GetMapping("/all")
     public String fromAll(){
-        return "I love u";
+        return "I love u Shorna";
+    }
+
+    @RequestMapping("/user")
+    public User getUserInfo(Principal principal){
+        return userRepository.findOne(Long.parseLong(principal.getName()));
     }
     @RequestMapping("/resource")
     public String userInfo(Principal principal){
+        System.out.println(principal);
         return "Welcome "+principal.getName()+", this is from the protected resource server";
     }
-
+*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(GradbookFriendApplication.class, args);

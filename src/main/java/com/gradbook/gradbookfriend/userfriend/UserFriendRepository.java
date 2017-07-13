@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Repository
 public interface UserFriendRepository extends JpaRepository<UserFriend, Long> {
-    @Cacheable
+
     List<UserFriend> findByUserId(Long userId);
+
 }

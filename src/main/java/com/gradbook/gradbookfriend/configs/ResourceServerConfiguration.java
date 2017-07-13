@@ -1,4 +1,3 @@
-/*
 package com.gradbook.gradbookfriend.configs;
 
 import org.slf4j.Logger;
@@ -20,11 +19,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import javax.sql.DataSource;
 import java.sql.DriverManager;
 
-*/
 /**
  * Created by Munna on 13-Jul-17.
- *//*
-
+ */
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
@@ -32,30 +29,4 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     Logger log = LoggerFactory.getLogger(ResourceServerConfigurer.class);
 
 
-
-    @Bean
-    @Primary
-    public RemoteTokenServices tokenServices(){
-        RemoteTokenServices tokenService = new RemoteTokenServices();
-        tokenService.setCheckTokenEndpointUrl("http://localhost:9090/oauth/check_token");
-        tokenService.setClientId("gradbook");
-        tokenService.setClientSecret("gradbook");
-        return tokenService;
-    }
-
-    @Bean
-    public TokenStore tokenStore(){
-        return new JdbcTokenStore(dataSource());
-    }
-
-    @Bean
-    public DataSource dataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        dataSource.setUrl("jdbc:sqlserver://gradbook.database.windows.net:1433;database=gradbook;user=gradbook@gradbook;password={@ustig100};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30");
-        dataSource.setUsername("gradbook");
-        dataSource.setPassword("@ustig100");
-        return dataSource;
-    }
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package com.gradbook.gradbookfriend.configs;
 
 import org.springframework.core.Ordered;
@@ -11,16 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Filter;
 
-*/
 /**
  * Created by Munna on 12-Jul-17.
- *//*
-
+ */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SimpleCorsFilter implements javax.servlet.Filter {
 
-    public SimpleCorsFilter(){
+    public SimpleCorsFilter() {
 
     }
 
@@ -42,11 +39,9 @@ public class SimpleCorsFilter implements javax.servlet.Filter {
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
-        } */
-/*else {
+        } else {
             chain.doFilter(req, res);
-        }*//*
-
+        }
 
     }
 
@@ -56,6 +51,4 @@ public class SimpleCorsFilter implements javax.servlet.Filter {
 
     }
 
-
 }
-*/
