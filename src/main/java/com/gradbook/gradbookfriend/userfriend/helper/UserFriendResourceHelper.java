@@ -5,9 +5,13 @@ import com.gradbook.gradbookfriend.user.UserRepository;
 import com.gradbook.gradbookfriend.userfriend.UserFriend;
 import com.gradbook.gradbookfriend.userfriend.UserFriendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +25,31 @@ public class UserFriendResourceHelper {
 
     @Autowired
     UserFriendRepository userFriendRepository;
+
+    public ResponseEntity<?> saveFriends(Principal principal, final List<User> users){
+        User loggedUser = userRepository.findOne(Long.parseLong(principal.getName()));
+        List<UserFriend> userFriends = new ArrayList<>();
+
+        for(User user: users){
+            UserFriend userFriend = new UserFriend();
+            userFriend.setUserId(loggedUser.getId());
+            userFriend.setFriendId(user.getId());
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            userFriend.setLastModified(timestamp);
+            userFriends.add(userFriend);
+
+            userFriend = new UserFriend();
+            userFriend.setUserId(user.getId());
+            userFriend.setFriendId(loggedUser.getId());
+            timestamp = new Timestamp(System.currentTimeMillis());
+            userFriend.setLastModified(timestamp);
+            userFriends.add(userFriend);
+        }
+
+        userFriendRepository.save(userFriends);
+
+        return ResponseEntity.ok("created");
+    }
 
     public List<User> getExistingFriends(Principal principal){
         User user = userRepository.findOne(Long.parseLong(principal.getName()));
@@ -49,6 +78,7 @@ public class UserFriendResourceHelper {
                 userIds.add(friend.getFriendId());
                 emails.add(friendUser.getEmail());
             }
+            emails.add(user.getEmail());
             users = userRepository.findByEmailNotIn(emails);
             return users;
         }

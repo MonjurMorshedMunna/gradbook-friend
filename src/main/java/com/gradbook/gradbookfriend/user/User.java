@@ -7,6 +7,7 @@ import java.sql.Timestamp;
  * Created by Munna on 10-Jul-17.
  */
 @Entity
+@Cacheable
 @Table(name="users")
 public class User {
 
