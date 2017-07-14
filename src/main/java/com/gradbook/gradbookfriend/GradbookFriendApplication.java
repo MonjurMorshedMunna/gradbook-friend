@@ -22,13 +22,16 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableCaching
+@RestController
 public class GradbookFriendApplication {
 
 
+    @Autowired
+    UserRepository userRepository;
 
-   /* @GetMapping("/all")
+    @GetMapping("/all")
     public String fromAll(){
-        return "I love u Shorna";
+        return "This is from all.";
     }
 
     @RequestMapping("/user")
@@ -40,7 +43,6 @@ public class GradbookFriendApplication {
         System.out.println(principal);
         return "Welcome "+principal.getName()+", this is from the protected resource server";
     }
-*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(GradbookFriendApplication.class, args);
